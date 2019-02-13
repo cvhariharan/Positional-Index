@@ -17,7 +17,7 @@ def normalize(text):
     text = re.sub(" +"," ",text)
     text = text.lower()
     print(text)
-    return processor.lemmetize(text)
+    return processor.lemmetize(text.strip())
 
 dir_name = input("Directory: ")
 filesList = lister(os.getcwd()+"/"+dir_name)
@@ -29,12 +29,21 @@ for eachFile in filesList:
     f = open(dir_name+"/"+eachFile, encoding = "ISO-8859-1")
     text = f.read()
     f.close()
-    text = normalize(text)
-
     words = text.split(" ")
 
     for i in range(len(words) - 1):
-        phrase = words[i] + " " + words[i + 1]
+        phrase = ""
+        s = 0
+        if bool(words[i].strip()):
+            phrase += words[i].strip()
+            s = 1
+        if bool(words[i + 1].strip()) and words[i + 1].istitle():
+            if s == 1:
+                phrase += " "
+            phrase += words[i+1].strip()
+        phrase = normalize(phrase)
+        # phrase = words[i].strip()  else "" + " " + words[i + 1].strip() if bool(words[i + 1].strip()) and words[i+1].istitle() else ""
+        # print(phrase)
         if phrase not in index.keys():
             index[phrase] = []
         if eachFile not in index[phrase]:

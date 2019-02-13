@@ -39,5 +39,5 @@ class Preprocessor:
     def lemmetize(self, text):
         #nltk.download('wordnet')
         l = WordNetLemmatizer()
-        text = l.lemmatize(text, pos='n')
+        text = l.lemmatize(text)
         return text
