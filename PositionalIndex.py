@@ -33,6 +33,8 @@ for eachFile in filesList:
     for i in range(len(words)):
         if words[i] not in index.keys():
             index[words[i]] = {}
+            index[words[i]][eachFile] = []
+            index[words[i]][eachFile].append(i)
         else:
             wordMap = index[words[i]]
             if eachFile not in wordMap.keys():
@@ -41,7 +43,7 @@ for eachFile in filesList:
             wordMap[eachFile].append(i)
             index[words[i]] = wordMap
 
-indexFile = open(os.getcwd()+"/index.json", "w")
+indexFile = open(os.getcwd()+"/positional-index.json", "w")
 index = OrderedDict(sorted(index.items(), key=lambda t: t[0]))
 indexFile.write(json.dumps(index))
 indexFile.close()
